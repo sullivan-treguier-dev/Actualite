@@ -10,7 +10,7 @@
     <header>
         <img src="img/logo_actualite.png" alt="Logo" title="Logo">
         <ul>
-            <li><a href=<?php echo $selected_accueil ? "#" : "index.php"; ?> <?php echo $selected_accueil ? "class='selected'" : ""; ?>>Accueil</a></li>
+            <li><a href=<?php if (isset($_SESSION)) { echo $selected_accueil ? "#" : "index.php"; } else { echo '#'; }; ?> <?php echo $selected_accueil ? "class='selected'" : ""; ?>>Accueil</a></li>
             <li><a href="#">Test</a></li>
         </ul>
     </header>
