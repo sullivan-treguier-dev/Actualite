@@ -3,7 +3,7 @@ $title = "Accueil";
 $selected_accueil = true;
 require_once 'pdo/pdo.php';
 require_once 'layout/layout_debut.php';
-require_once 'posts/posts.php';
+require_once 'posts/Post.php';
 ?>
 <div>
     <?php
