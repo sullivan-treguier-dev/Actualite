@@ -1,30 +1,32 @@
 <?php
 require_once 'Createur.php';
-class Post {
+require_once 'pdo/pdo.php';
+class Post extends Bdd {
 
+    protected static string $table = 'posts';
+    protected static string $model = self::class;
+
+    public int $id;
     public string $titre;
     public string $contenu;
-    public Createur $createur;
-    public string $date_creation;
-    public string $date_modif;
+    public int $createur_id;
+    public DateTime $date_creation;
+    public DateTime $date_modif;
 
-    public function __construct(string $titre, string $contenu, Createur $createur, string $date_creation, string $date_modif) {
-        $this->titre = $titre;
-        $this->contenu = $contenu;
-        $this->createur = $createur;
-        $this->date_creation = $date_creation;
-        $this->date_modif = $date_modif;
+    public function __construct(array $values) {
+        $this->id = intval($values['id']);
+        $this->titre = $values['titre'];
+        $this->contenu = $values['contenu'];
+        $this->createur_id = intval($values['createur_id']);
+        $this->date_creation = DateTime::createFromFormat('Y-m-d', $values['created_at']);
+        $this->date_modif = DateTime::createFromFormat('Y-m-d', $values['updated_at']);
     }
 
-    public function getDetails(): string {
-        return "Crée par {$this->createur->prenom} {$this->createur->nom}, le {$this->date_creation} et modifié le {$this->date_modif}";
-    }
-
-    public static function afficheCinqArticle(string $sql): array {
+    public static function afficheCinqArticle(): array {
         $post_stockee = [];
         require_once 'pdo/pdo.php';
-        $temp = $pdo->query($sql);
-        while ($resultat = $temp->fetch()) {
+        $temp = self::all("SELECT * FROM posts");
+        while ($resultat = $temp) {
             $sql_createur = "SELECT * FROM createurs WHERE id = {$resultat['createur_id']}";
             $createur_query = $pdo->query($sql_createur)->fetch();
             $createur = new Createur($createur_query['nom'], $createur_query['prenom'], $createur_query['linkedin'], $createur_query['mail'], $createur_query['telephone']);
@@ -32,10 +34,10 @@ class Post {
             $post_stockee[] = $post;
             echo "<form action='article_details.php' method='get'>";
             echo "<div>";
-            echo "<h1>" . $titre . "</h1>";
-            echo "<p>" . $contenu . "</p>";
+            echo "<h1>" . $post->titre . "</h1>";
+            echo "<p>" . $post->contenu . "</p>";
             echo "<input type='hidden' name='{$resultat['id']}'>";
-            echo "<button type='submit'}'>Voir les détails</button>";
+            echo "<button type='submit'>Voir les détails</button>";
             echo "</div>";
             echo "</form>";
         }

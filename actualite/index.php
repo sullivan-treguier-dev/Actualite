@@ -9,7 +9,7 @@ require_once 'class/Post.php';
 <div>
     <?php
     if (!isset($e)) {
-        $post->afficheCinqArticle("SELECT * FROM posts");
+        Post::afficheCinqArticle("SELECT * FROM posts");
     }
     ?>
 </div>

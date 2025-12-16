@@ -1,5 +1,5 @@
 <?php
-class Carte {
+class Carte extends Bdd {
 
     public string $adresse;
     public string $code_postal;

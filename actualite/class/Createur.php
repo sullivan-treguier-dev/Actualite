@@ -1,5 +1,5 @@
 <?php
-class Createur {
+class Createur extends Bdd {
 
     public string $nom;
     public string $prenom;
