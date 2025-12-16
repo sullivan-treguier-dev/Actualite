@@ -9,8 +9,7 @@ require_once 'class/Post.php';
 <div>
     <?php
     if (!isset($e)) {
-        $sql = "SELECT * FROM createurs";
-        $createur = new Createur($resultat['nom'], $resultat['prenom'], $resultat['linkedin'], $resultat['mail'], $resultat['telephone']);
+        $post->afficheCinqArticle("SELECT * FROM posts");
     }
     ?>
 </div>

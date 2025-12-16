@@ -25,6 +25,9 @@ class Post {
         require_once 'pdo/pdo.php';
         $temp = $pdo->query($sql);
         while ($resultat = $temp->fetch()) {
+            $sql_createur = "SELECT * FROM createurs WHERE id = {$resultat['createur_id']}";
+            $createur_query = $pdo->query($sql_createur)->fetch();
+            $createur = new Createur($createur_query['nom'], $createur_query['prenom'], $createur_query['linkedin'], $createur_query['mail'], $createur_query['telephone']);
             $post = new Post($resultat['titre'], $resultat['contenu'], $createur, $resultat['created_at'], $resultat['updated_at']);
             $post_stockee[] = $post;
             echo "<form action='article_details.php' method='get'>";
