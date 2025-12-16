@@ -11,12 +11,15 @@ require_once 'posts/posts.php';
         $sql = "SELECT * FROM posts";
         $temp = $pdo->query($sql);
         while ($resultat = $temp->fetch()) {
-            $post = new Post($resultat['titre'], $resultat['slug'], $resultat['contenu']);
+            $post = new Post($resultat['titre'], $resultat['contenu']);
+            echo "<form action='article_details.php' method='get'>";
             echo "<div>";
             echo "<h1>" . $post->titre . "</h1>";
             echo "<p>" . $post->contenu . "</p>";
-            echo "<a href='". $post->slug . "'> Voir en détails </a>";
+            echo "<input type='hidden' name='{$resultat['id']}'>";
+            echo "<button type='submit'}'>Voir les détails</button>";
             echo "</div>";
+            echo "</form>";
         }
     }
     ?>
