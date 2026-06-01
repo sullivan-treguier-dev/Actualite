@@ -8,12 +8,7 @@ require_once 'classe/Post.php';
 ?>
 <div>
     <?php
-        Post::afficheCinqArticle();
-    if (!isset($e)) {
-        
-    } else {
-        'Erreur';
-    }
+        Post::afficheNombreArticle(5);
     ?>
 </div>
 <?php

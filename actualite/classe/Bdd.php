@@ -1,6 +1,7 @@
 <?php
 namespace classe;
 
+use ArrayAccess;
 use PDO;
 
 class Bdd {
@@ -28,12 +29,23 @@ class Bdd {
         return $pdo;
     }
 
-    public static function all() {
+    public static function all(): array {
         $all_table = self::connect()->query("SELECT * FROM " . static::$table)->fetchAll();
         return $all_table;
     }
 
-    public static function find(int $id) {
+    public static function find(int $id): array {
         $find_id_table = self::connect()->query("SELECT * FROM " . static::$table . " WHERE id = {$id}")->fetch();
         return $find_id_table;
-    }}
+    }
+
+    public static function limit(int $number): array {
+        $limit_table = self::connect()->query("SELECT * FROM " . static::$table . " LIMIT {$number}")->fetchAll();
+        return $limit_table;
+    }
+
+    public static function count(): int {
+        $count_table = self::connect()->query("SELECT count(*) as count FROM " . static::$table)->fetchAll();
+        return $count_table[0]['count'];
+    }
+}

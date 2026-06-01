@@ -25,9 +25,9 @@ class Post extends Bdd {
         $this->date_modif = DateTime::createFromFormat('Y-m-d', $values['updated_at']);
     }
 
-    public static function afficheCinqArticle(): array {
+    public static function afficheNombreArticle(int $limite): array {
         $post_stockee = [];
-        $temp = self::all();
+        $temp = self::limit($limite);
         foreach ($temp as $resultat) {
             $createur = Createur::find($resultat['createur_id']);
             $post = new Post(['id' => $resultat['id'], 'titre' => $resultat['titre'], 'contenu' => $resultat['contenu'], 'createur_id' => $resultat['createur_id'], 'created_at' => $resultat['created_at'], 'updated_at' => $resultat['updated_at']]);
@@ -37,10 +37,11 @@ class Post extends Bdd {
             echo "<h2>" . $createur['prenom'] . ' ' . $createur['nom'] . "</h2>";
             echo "<p>" . $post->contenu . "</p>";
             echo "</div>";
-            echo "<a href='./article_details.php'>";
+            echo "<a href='./article_details.php?id={$post->id}'>";
             echo "Voir les détails";
             echo "</a>";
         }
+        echo "<p class='total_article'>Nombre total d'articles : " . self::count();
         return $post_stockee;
     }
 }

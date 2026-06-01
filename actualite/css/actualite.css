@@ -73,3 +73,9 @@ footer>div>ul {
 body>div {
     margin: 0 2%;
 }
+
+.total_article {
+    text-align: right;
+    color: #494949;
+    font-size: 0.75rem;
+}
