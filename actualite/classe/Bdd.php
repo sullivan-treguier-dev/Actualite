@@ -28,13 +28,12 @@ class Bdd {
         return $pdo;
     }
 
-    public function all() {
-        $all_table = self::connect()->query("SELECT * FROM {$this->table}")->fetchAll();
+    public static function all() {
+        $all_table = self::connect()->query("SELECT * FROM " . static::$table)->fetchAll();
         return $all_table;
     }
 
-    public function find(int $id) {
-        $find_id_table = self::connect()->query("SELECT * FROM {$this->table} WHERE id = {$id}")->fetch();
+    public static function find(int $id) {
+        $find_id_table = self::connect()->query("SELECT * FROM " . static::$table . " WHERE id = {$id}")->fetch();
         return $find_id_table;
-    }
-}
+    }}

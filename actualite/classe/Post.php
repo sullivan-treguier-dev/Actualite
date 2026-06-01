@@ -2,7 +2,8 @@
 namespace classe;
 
 use DateTime;
-require_once 'pdo/pdo.php';
+require_once 'classe/Bdd.php';
+require_once 'classe/Createur.php';
 class Post extends Bdd {
 
     protected static string $table = 'posts';
@@ -26,22 +27,19 @@ class Post extends Bdd {
 
     public static function afficheCinqArticle(): array {
         $post_stockee = [];
-        require_once 'pdo/pdo.php';
-        $temp = self::all("SELECT * FROM posts");
-        while ($resultat = $temp) {
-            $sql_createur = "SELECT * FROM createurs WHERE id = {$resultat['createur_id']}";
-            $createur_query = $pdo->query($sql_createur)->fetch();
-            $createur = new Createur($createur_query['nom'], $createur_query['prenom'], $createur_query['linkedin'], $createur_query['mail'], $createur_query['telephone']);
-            $post = new Post($resultat['titre'], $resultat['contenu'], $createur, $resultat['created_at'], $resultat['updated_at']);
+        $temp = self::all();
+        foreach ($temp as $resultat) {
+            $createur = Createur::find($resultat['createur_id']);
+            $post = new Post(['id' => $resultat['id'], 'titre' => $resultat['titre'], 'contenu' => $resultat['contenu'], 'createur_id' => $resultat['createur_id'], 'created_at' => $resultat['created_at'], 'updated_at' => $resultat['updated_at']]);
             $post_stockee[] = $post;
-            echo "<form action='article_details.php' method='get'>";
             echo "<div>";
             echo "<h1>" . $post->titre . "</h1>";
+            echo "<h2>" . $createur['prenom'] . ' ' . $createur['nom'] . "</h2>";
             echo "<p>" . $post->contenu . "</p>";
-            echo "<input type='hidden' name='{$resultat['id']}'>";
-            echo "<button type='submit'>Voir les détails</button>";
             echo "</div>";
-            echo "</form>";
+            echo "<a href='./article_details.php'>";
+            echo "Voir les détails";
+            echo "</a>";
         }
         return $post_stockee;
     }

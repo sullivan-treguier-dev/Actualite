@@ -2,6 +2,8 @@
 namespace classe;
 
 class Createur extends Bdd {
+    protected static string $table = 'createurs';
+    protected static string $model = self::class;
 
     public string $nom;
     public string $prenom;
