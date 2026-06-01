@@ -44,5 +44,17 @@ class Post extends Bdd {
         echo "<p class='total_article'>Nombre total d'articles : " . self::count();
         return $post_stockee;
     }
+
+    public static function afficheDetailArticle(int $id) {
+        $resultat = self::find($id);
+        $createur = Createur::find($resultat['createur_id']);
+        $post = new Post(['id' => $resultat['id'], 'titre' => $resultat['titre'], 'contenu' => $resultat['contenu'], 'createur_id' => $resultat['createur_id'], 'created_at' => $resultat['created_at'], 'updated_at' => $resultat['updated_at']]);
+        echo "<div>";
+        echo "<h1>" . $post->titre . "</h1>";
+        echo "<h2>" . $createur['prenom'] . ' ' . $createur['nom'] . " (" . $createur['mail'] . ")</h2>";
+        echo "<a href='" . $createur['linkedin'] . "'target='_blank'>LinkedIn de " . $createur['prenom'] .  "</a>";
+        echo "<p>" . $post->contenu . "</p>";
+        echo "</div>";
+    }
 }
 ?>
