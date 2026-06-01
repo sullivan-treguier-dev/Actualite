@@ -1,4 +1,8 @@
 <?php
+namespace classe;
+
+use PDO;
+
 class Bdd {
 
     protected static string $table;
