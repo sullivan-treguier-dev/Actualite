@@ -27,10 +27,10 @@ class Post extends Bdd {
 
     public static function afficheNombreArticle(int $limite): array {
         $post_stockee = [];
-        $temp = self::limit($limite);
+        $temp = self::all()->limit($limite)->toArray();
         foreach ($temp as $resultat) {
-            $createur = Createur::find($resultat['createur_id']);
-            $post = new Post(['id' => $resultat['id'], 'titre' => $resultat['titre'], 'contenu' => $resultat['contenu'], 'createur_id' => $resultat['createur_id'], 'created_at' => $resultat['created_at'], 'updated_at' => $resultat['updated_at']]);
+            $createur = Createur::find($resultat->createur_id);
+            $post = new Post(['id' => $resultat->id, 'titre' => $resultat->titre, 'contenu' => $resultat->contenu, 'createur_id' => $resultat->createur_id, 'created_at' => $resultat->created_at, 'updated_at' => $resultat->updated_at]);
             $post_stockee[] = $post;
             echo "<div>";
             echo "<h1>" . $post->titre . "</h1>";
@@ -41,7 +41,7 @@ class Post extends Bdd {
             echo "Voir les détails";
             echo "</a>";
         }
-        echo "<p class='total_article'>Nombre total d'articles : " . self::count();
+        echo "<p class='total_article'>Nombre total d'articles : " . self::all()->count();
         return $post_stockee;
     }
 
